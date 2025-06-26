@@ -610,6 +610,7 @@
         <button type="button" class="form-btn" onclick="nextStep()">Próxima</button>
       </div>
     </div>
+
     <!-- HISTÓRIA -->
     <div class="step">
       <div class="form-label">16) Qual foi o evento que desencadeou o início da Primeira Guerra Mundial?</div>
@@ -860,6 +861,8 @@
         <label for="q30c">c) Superprodução industrial e agrícola</label>
         <input type="radio" id="q30d" name="q30" value="Redução da especulação financeira">
         <label for="q30d">d) Redução da especulação financeira</label>
+        <input type="radio" id="q30e" name="q30" value="Aumento das exportações europeias">
+        <label for="q30e">e) Aumento das exportações europeias</label>
       </div>
       <div class="botoes-etapa">
         <button type="button" class="form-btn btn-voltar" onclick="prevStep()">Voltar</button>
@@ -917,6 +920,7 @@
       "Nação", // q13
       "Segunda Guerra Mundial", // q14
       "2.500", // q15
+
       // História
       "O assassinato do arquiduque Francisco Ferdinando", // q16
       "Tríplice Aliança e Tríplice Entente", // q17
@@ -935,39 +939,44 @@
       "Superprodução industrial e agrícola" // q30
     ];
 
+    const nomesQuestoes = [
+      "q1","q2","q3","q4","q5","q6","q7","q8","q9","q10","q11","q12","q13","q14","q15",
+      "q16","q17","q18","q19","q20","q21","q22","q23","q24","q25","q26","q27","q28","q29","q30"
+    ];
+
     const textosQuestoes = [
       // Geografia
-      "1) Qual linha geográfica divide a Terra em hemisférios Oriental e Ocidental?",
-      "2) Qual evento histórico contribuiu significativamente para a expansão da ideia de Ocidente e Oriente?",
-      "3) Qual termo era usado pela Igreja Católica para se referir aos povos não cristãos durante as Cruzadas?",
-      "4) Qual período histórico é frequentemente associado à intensificação da divisão entre Ocidente e Oriente na Europa?",
-      "5) Qual conjunto de montanhas forma parte da divisa entre a Europa e a Ásia?",
-      "6) Durante a Guerra Fria, como a Europa foi dividida?",
-      "7) Qual é o clima característico da região do Mediterrâneo na Europa?",
-      "8) Qual dos seguintes fatores contribuiu significativamente para o aumento da temperatura na Europa e no planeta?",
-      "9) Qual é a principal consequência do desmatamento histórico na Europa?",
-      "10) Qual é o objetivo principal do Pacto Ecológico Europeu em relação às mudanças climáticas?",
-      "11) Qual é a população aproximada da Europa, de acordo com estimativas recentes?",
-      "12) Qual dos seguintes problemas sociais é frequentemente enfrentado por imigrantes muçulmanos e ciganos na Europa?",
-      "13) Qual conceito está diretamente ligado ao povo e às suas características culturais, incluindo a relação com um território específico?",
-      "14) Qual evento histórico é comparado à crise de refugiados da Ucrânia em termos de magnitude na Europa?",
-      "15) Aproximadamente quantas pessoas morreram afogadas ao tentar atravessar o Mar Mediterrâneo em 2014?",
+      "1) Qual é o principal objetivo da regionalização do espaço geográfico?",
+      "2) Em qual hemisfério está localizado o continente americano?",
+      "3) Qual instituto é responsável pela divisão regional oficial do Brasil?",
+      "4) Qual é a extensão territorial aproximada do continente americano?",
+      "5) Durante a Guerra Fria, como o mundo foi regionalizado?",
+      "6) Qual foi o principal fator que permitiu a expansão do contato europeu com a África além da região do Mar Mediterrâneo?",
+      "7) Qual região da África manteve contato comercial com a Europa antes do século XIV?",
+      "8) Qual foi o impacto do neocolonialismo/imperialismo europeu nas relações de trabalho na África?",
+      "9) Principal atividade econômica que impulsionou o surgimento de impérios na África oriental foi:",
+      "10) Qual foi o principal objetivo da Conferência de Berlim em relação ao continente africano?",
+      "11) Em que ano a população mundial atingiu 8 bilhões de pessoas?",
+      "12) Qual era a taxa de fecundidade mundial em 2022?",
+      "13) Qual é a área do conhecimento que estuda as populações humanas, analisando sua formação e evolução de acordo com tamanho, distribuição espacial e composição?",
+      "14) Qual teoria demográfica propõe a esterilização em massa e o uso de métodos anticonceptivos como formas de controle populacional?",
+      "15) Países com alta taxa de fecundidade são considerados:",
       // História
-      "16) Qual foi o evento que desencadeou o início da Primeira Guerra Mundial?",
-      "17) Quais eram os dois principais blocos de alianças durante a Primeira Guerra Mundial?",
-      "18) Qual foi uma das principais inovações tecnológicas utilizadas em larga escala durante a Primeira Guerra Mundial?",
-      "19) Qual tratado marcou oficialmente o fim da Primeira Guerra Mundial?",
-      "20) Qual foi a principal tática de combate utilizada durante grande parte da Primeira Guerra Mundial na Frente Ocidental?",
-      "21) Quem liderou o golpe que resultou na Proclamação da República?",
-      "22) Qual grupo político apoiou a Proclamação da República?",
-      "23) Qual foi o destino da família real após a Proclamação da República?",
-      "24) Como é conhecido o período entre 1889 e 1930 na história do Brasil?",
-      "25) Qual evento histórico marcou o início do período entreguerras?",
-      "26) Qual crise econômica teve um impacto significativo durante o período entreguerras?",
-      "27) Qual política econômica foi adotada nos Estados Unidos para combater os efeitos da Grande Depressão?",
-      "28) Qual ideologia política ganhou força na Itália durante o período entreguerras?",
-      "29) Qual regime político se estabeleceu na Alemanha durante o período entreguerras?",
-      "30) Qual dos seguintes fatores contribuiu significativamente para a crise de 1929?"
+      "16) Qual movimento político, cultural e intelectual francês influenciou diversas revoluções entre os séculos XVII e XIX?",
+      "17) Qual classe social experimentou o apogeu político na Revolução Francesa e o apogeu econômico com a Primeira Revolução Industrial?",
+      "18) Qual país foi pioneiro nas transformações políticas, econômicas e sociais entre os séculos XVII e XIX, limitando o poder do rei e fortalecendo o Parlamento?",
+      "19) Qual período ficou conhecido como \"século das luzes\" devido à valorização da razão e à defesa do direito natural do ser humano?",
+      "20) Qual filósofo iluminista é associado ao conceito de liberalismo político?",
+      "21) Qual grupo social compunha o Terceiro Estado na França pré-revolucionária?",
+      "22) Qual documento, inspirado nas ideias iluministas, foi aprovado pela Assembleia Nacional Constituinte em 1789?",
+      "23) Qual foi o período mais radical da Revolução Francesa, caracterizado por execuções em massa?",
+      "24) Quem liderou o golpe do 18 Brumário, que pôs fim ao Diretório e iniciou o Consulado?",
+      "25) Qual slogan resumia os ideais da Revolução Francesa?",
+      "26) Qual evento histórico marcou o início da Era Napoleônica?",
+      "27) Qual foi o título que Napoleão Bonaparte assumiu em 1804?",
+      "28) Qual foi o destino final de Napoleão Bonaparte após sua derrota definitiva?",
+      "29) Qual código legal, introduzido por Napoleão, ainda influencia sistemas jurídicos em todo o mundo?",
+      "30) A chamada Era Napoleônica durou __ anos e pode ser dividida em dois períodos: Consulado (1799-1804) Império (1804-1815)"
     ];
 
     let tempo = 7200; // 2 horas
@@ -1109,7 +1118,7 @@
       const formData = new FormData(form);
 
       // Envia para o Apps Script
-      fetch('https://script.google.com/macros/s/AKfycbw_87V5nGduI_W9UK2g0BTAV0WqYsHRJ6u9ZPmpRQl5rMFc-lOniE_0PJX8_NJiWYGH/exec', {
+      fetch('https://script.google.com/macros/s/AKfycbzkdovCzJupSWUgEbTnVcfxPMk4-_SeaMPvBdiypxVvBEykTRMDCu1XqBomnfXF8nAf/exec', {
         method: "POST",
         body: formData
       })
