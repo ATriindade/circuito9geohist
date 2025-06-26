@@ -1,0 +1,1216 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Circuito 2025.01 - Formulário</title>
+  <style>
+    body {
+      background: linear-gradient(135deg, #0b1a13 0%, #163325 100%);
+      font-family: 'Segoe UI', Arial, sans-serif;
+      min-height: 100vh;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .form-card {
+      background: #162c20;
+      border-radius: 22px;
+      box-shadow: 0 8px 32px #0a1a12, 0 1.5px 8px #1b3c2b66;
+      padding: 32px 28px 28px 28px;
+      max-width: 430px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      align-items: stretch;
+      border: 2.5px solid #1de982;
+      position: relative;
+      overflow: hidden;
+    }
+    .progress-bar-bg {
+      width: 100%;
+      height: 12px;
+      background: #0e1c14;
+      border-radius: 0 0 12px 12px;
+      margin-bottom: 0;
+      overflow: hidden;
+      box-shadow: 0 2px 8px #1de98233;
+    }
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, #1de982 0%, #43e97b 100%);
+      transition: width 0.4s cubic-bezier(.4,2.2,.2,1);
+      border-radius: 0 0 12px 12px;
+      box-shadow: 0 0 8px #1de98299;
+    }
+    #timer-container {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 18px 0 0 0;
+    }
+    #timer {
+      background: #0e1c14;
+      color: #1de982;
+      font-weight: 900;
+      font-size: 1.35rem;
+      border-radius: 8px;
+      padding: 10px 24px;
+      letter-spacing: 2px;
+      border: 2px solid #1de982;
+      box-shadow: 0 0 12px #1de98244;
+      font-family: 'Courier New', Courier, monospace;
+      text-shadow: 0 0 8px #1de98288;
+    }
+    .form-title {
+      font-size: 2.1rem;
+      color: #1de982;
+      font-weight: 900;
+      text-align: center;
+      margin: 24px 0 2px 0;
+      letter-spacing: 1px;
+      text-shadow: 0 2px 8px #1de98255;
+    }
+    .form-desc {
+      text-align: center;
+      color: #b2dfdb;
+      font-size: 1.13rem;
+      margin-bottom: 10px;
+    }
+    .form-label {
+      font-weight: 600;
+      color: #1de982;
+      margin-bottom: 4px;
+      font-size: 1.13rem;
+      text-shadow: 0 1px 4px #1de98233;
+    }
+    .form-input {
+      padding: 12px;
+      border-radius: 8px;
+      border: 2px solid #1de982;
+      font-size: 1.08rem;
+      margin-bottom: 10px;
+      background: #0e1c14;
+      color: #fff;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      box-shadow: 0 0 8px #1de98222;
+    }
+    .form-input:focus {
+      border-color: #43e97b;
+      outline: none;
+      background: #162c20;
+      box-shadow: 0 0 12px #1de98255;
+    }
+    .form-btn {
+      background: linear-gradient(90deg, #1de982 0%, #43e97b 100%);
+      color: #10281b;
+      border: none;
+      border-radius: 10px;
+      padding: 15px 0;
+      font-size: 1.18rem;
+      font-weight: 800;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: 
+        background 0.2s, 
+        transform 0.15s, 
+        box-shadow 0.2s,
+        filter 0.2s;
+      box-shadow: 0 0 16px #1de98255, 0 2px 8px #1de98222;
+      letter-spacing: 1px;
+      text-shadow: 0 1px 4px #fff8;
+    }
+    .form-btn:hover {
+      filter: brightness(1.15);
+      box-shadow: 0 0 32px #1de982cc, 0 2px 16px #1de98244;
+      transform: scale(1.04);
+    }
+    .btn-voltar {
+      background: transparent !important;
+      color: #1de982 !important;
+      border: 2px solid #1de982 !important;
+      box-shadow: none !important;
+      margin-top: 10px;
+      margin-bottom: 0;
+      font-weight: 700;
+      transition: 
+        background 0.2s, 
+        color 0.2s, 
+        border 0.2s, 
+        transform 0.15s, 
+        box-shadow 0.2s;
+    }
+    .btn-voltar:hover {
+      background: #0e1c14 !important;
+      color: #43e97b !important;
+      border-color: #43e97b !important;
+      box-shadow: 0 0 16px #1de98288;
+      transform: scale(1.04);
+    }
+    .quiz-options {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .quiz-options input[type="radio"] {
+      position: absolute;
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    .quiz-options label {
+      position: relative;
+      cursor: pointer;
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-size: 1.08rem;
+      transition: background 0.15s, color 0.15s, border 0.15s;
+      border: 2px solid transparent;
+      color: #b2dfdb;
+      background: #1b3c2b;
+      box-shadow: 0 0 4px #1de98222;
+    }
+    .quiz-options input[type="radio"]:focus + label,
+    .quiz-options label:hover {
+      background: #10281b;
+      border-color: #1de982;
+      color: #1de982;
+      box-shadow: 0 0 8px #1de98255;
+    }
+    .quiz-options input[type="radio"]:checked + label {
+      background: #10281b;
+      border: 2.5px solid #43e97b;
+      color: #1de982;
+      font-weight: bold;
+      box-shadow: 0 0 24px #1de982cc, 0 0 8px #1de98299 inset, 0 0 12px #1de98299;
+      transform: scale(1.04);
+      transition: box-shadow 0.2s, background 0.2s, color 0.2s, transform 0.2s, border 0.2s;
+      z-index: 1;
+    }
+    .quiz-options input[type="radio"]:checked + label::before {
+      background: #1de982;
+      border-color: #43e97b;
+      box-shadow: 0 0 8px #1de98299, 0 0 0 4px #1de98233;
+    }
+    #sending-loader, #resultado, #quiz-form {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+    }
+    #mensagem-resultado {
+      font-size: 1.3rem;
+      color: #1de982;
+      margin: 18px 0;
+      text-shadow: 0 1px 4px #1de98255;
+    }
+    .correcao {
+      margin-top: 18px;
+      background: #0e1c14;
+      border-radius: 10px;
+      padding: 10px 16px;
+      color: #b2dfdb;
+      font-size: 1.04rem;
+      border: 2px solid #1de982;
+      box-shadow: 0 0 8px #1de98233;
+    }
+    .step { display: none; flex-direction: column; gap: 12px; }
+    .step.active { display: flex; animation: fadeIn 0.5s;}
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(30px);}
+      to { opacity: 1; transform: translateY(0);}
+    }
+    ul.regras {
+      text-align:left;
+      color:#b2dfdb;
+      font-size:1.04rem;
+      margin:0 0 10px 0;
+      padding-left:18px;
+    }
+    .botoes-etapa {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      margin-top: 8px;
+    }
+    .form-btn, .btn-voltar {
+      flex: 1 1 0;
+      min-width: 0;
+    }
+    @media (max-width: 600px) {
+      .form-card {
+        padding: 8px 2vw 8px 2vw;
+        max-width: 99vw;
+      }
+      .form-title { font-size: 1.2rem; }
+      #timer { font-size: 1.05rem; padding: 7px 8px;}
+      .form-label, .form-desc { font-size: 1rem; }
+      .quiz-options label { font-size: 0.98rem; padding: 8px 8px; }
+      .botoes-etapa { flex-direction: column; gap: 6px; }
+      .form-btn, .btn-voltar { font-size: 1rem; padding: 12px 0; }
+      #mensagem-resultado { font-size: 1.05rem; }
+      .correcao { font-size: 0.97rem; padding: 8px 6px; }
+      #carrossel-correcao { flex-direction: column; gap: 8px; }
+    }
+    /* Impede seleção de texto em todo o corpo e elementos principais */
+    body, .form-card, .quiz-options label, .form-label, .form-title, .form-desc {
+      user-select: none;
+      -webkit-user-select: none;
+      -ms-user-select: none;
+    }
+    .loader {
+      border: 6px solid #1de98244;
+      border-top: 6px solid #1de982;
+      border-radius: 50%;
+      width: 48px;
+      height: 48px;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg);}
+      100% { transform: rotate(360deg);}
+    }
+    .correcao-seta {
+      background: #1de982;
+      color: #10281b;
+      border: none;
+      border-radius: 50%;
+      width: 38px;
+      height: 38px;
+      font-size: 1.5rem;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 0 8px #1de98255;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s, transform 0.15s;
+      margin: 0 4px;
+    }
+    .correcao-seta:hover {
+      background: #43e97b;
+      transform: scale(1.12);
+    }
+    @media (max-width: 600px) {
+      .correcao-seta {
+        width: 32px;
+        height: 32px;
+        font-size: 1.15rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="page-loader" style="position:fixed;z-index:99999;top:0;left:0;width:100vw;height:100vh;display:flex;align-items:center;justify-content:center;background:#0b1a13;">
+    <div style="display:flex;flex-direction:column;align-items:center;gap:18px;">
+      <div class="loader"></div>
+      <div style="color:#1de982;font-size:1.3rem;font-weight:bold;">Carregando...</div>
+    </div>
+  </div>
+
+  <div style="position:fixed;top:0;left:0;width:100vw;background:#1de982;color:#10281b;font-weight:bold;text-align:center;padding:8px 0;z-index:9999;box-shadow:0 2px 8px #1de98255;">
+    ⚠️ Não saia da página ou troque de aba! Isso encerrará sua avaliação.
+  </div>
+  <div class="form-card" id="inicio">
+    <div style="display:flex;justify-content:center;">
+      <span style="font-size:3.2rem; color:#1de982; filter:drop-shadow(0 0 8px #1de98288); margin-bottom:10px;">🎮</span>
+    </div>
+    <div class="form-title" style="font-size:2.5rem; margin-bottom:0;">Circuito 2025.01</div>
+    <div class="form-desc" style="font-size:1.18rem; margin-bottom:18px;">
+      <b>Bem-vindo ao desafio!</b><br>
+      <span style="color:#1de982;">História e Geografia</span><br>
+      <span style="color:#b2dfdb;">Responda todas as perguntas no tempo e tente bater o recorde!</span>
+    </div>
+    <div style="background:#0e1c14;border-radius:12px;padding:14px 18px;margin-bottom:18px;border:1.5px solid #1de982;">
+      <ul class="regras" style="margin:0;">
+        <li>Não saia da página durante o quiz.</li>
+        <li>Tempo limitado: <b>120 minutos</b>.</li>
+        <li>Fale com um professor em caso de dúvida.</li>
+      </ul>
+    </div>
+    <button class="form-btn" style="font-size:1.25rem;box-shadow:0 0 18px #1de98288;" onclick="comecar()">Começar!</button>
+  </div>
+
+  <form class="form-card" id="quiz-form" autocomplete="off">
+    <div class="progress-bar-bg">
+      <div class="progress-bar" id="progress-bar" style="width: 0%"></div>
+    </div>
+    <div id="timer-container">
+      <div id="timer">
+        ⏱ <span id="timer-count">120:00</span>
+      </div>
+    </div>
+    <div class="form-title">Circuito 2025.01</div>
+    <div class="form-desc">História e Geografia<br>Responda todas as perguntas e clique em Enviar!</div>
+
+    <!-- Etapa 1: Nome da equipe -->
+    <div class="step active">
+      <label class="form-label" for="nome">Nome da equipe</label>
+      <input class="form-input" type="text" id="nome" name="nome" required placeholder="Digite o nome da equipe">
+      <div class="botoes-etapa">
+        <button type="button" class="form-btn" onclick="nextStep()">Próxima</button>
+      </div>
+    </div>
+
+    <!-- GEOGRAFIA -->
+    <div class="step">
+      <div class="form-label">1) Qual linha geográfica divide a Terra em hemisférios Oriental e Ocidental?</div>
+      <div class="quiz-options">
+        <input type="radio" id="q1a" name="q1" value="Linha do Equador" required>
+        <label for="q1a">a) Linha do Equador</label>
+        <input type="radio" id="q1b" name="q1" value="Trópico de Câncer">
+        <label for="q1b">b) Trópico de Câncer</label>
+        <input type="radio" id="q1c" name="q1" value="Trópico de Capricórnio">
+        <label for="q1c">c) Trópico de Capricórnio</label>
+        <input type="radio" id="q1d" name="q1" value="Meridiano de Greenwich">
+        <label for="q1d">d) Meridiano de Greenwich</label>
+      </div>
+      <div class="botoes-etapa">
+        <button type="button" class="form-btn btn-voltar" onclick="prevStep()">Voltar</button>
+        <button type="button" class="form-btn" onclick="nextStep()">Próxima</button>
+      </div>
+    </div>
+    <div class="step">
+      <div class="form-label">2) Qual evento histórico contribuiu significativamente para a expansão da ideia de Ocidente e Oriente?</div>
+      <div class="quiz-options">
+        <input type="radio" id="q2a" name="q2" value="A Revolução Francesa" required>
+        <label for="q2a">a) A Revolução Francesa</label>
+        <input type="radio" id="q2b" name="q2" value="As Grandes Navegações">
+        <label for="q2b">b) As Grandes Navegações</label>
+        <input type="radio" id="q2c" name="q2" value="A Primeira Guerra Mundial">
+        <label for="q2c">c) A Primeira Guerra Mundial</label>
+        <input type="radio" id="q2d" name="q2" value="A Revolução Russa">
+        <label for="q2d">d) A Revolução Russa</label>
+      </div>
+      <div class="botoes-etapa">
+        <button type="button" class="form-btn btn-voltar" onclick="prevStep()">Voltar</button>
+        <button type="button" class="form-btn" onclick="nextStep()">Próxima</button>
+      </div>
+    </div>
+    <div class="step">
+      <div class="form-label">3) Qual termo era usado pela Igreja Católica para se referir aos povos não cristãos durante as Cruzadas?</div>
+      <div class="quiz-options">
+        <input type="radio" id="q3a" name="q3" value="Pagãos" required>
+        <label for="q3a">a) Pagãos</label>
+        <input type="radio" id="q3b" name="q3" value="Hereges">
+        <label for="q3b">b) Hereges</label>
+        <input type="radio" id="q3c" name="q3" value="Infiéis">
+        <label for="q3c">c) Infiéis</label>
+        <input type="radio" id="q3d" name="q3" value="Bárbaros">
+        <label for="q3d">d) Bárbaros</label>
+      </div>
+      <div class="botoes-etapa">
+        <button type="button" class="form-btn btn-voltar" onclick="prevStep()">Voltar</button>
+        <button type="button" class="form-btn" onclick="nextStep()">Próxima</button>
+      </div>
+    </div>
+    <div class="step">
+      <div class="form-label">4) Qual período histórico é frequentemente associado à intensificação da divisão entre Ocidente e Oriente na Europa?</div>
+      <div class="quiz-options">
+        <input type="radio" id="q4a" name="q4" value="Renascimento" required>
+        <label for="q4a">a) Renascimento</label>
+        <input type="radio" id="q4b" name="q4" value="Idade Média">
+        <label for="q4b">b) Idade Média</label>
+        <input type="radio" id="q4c" name="q4" value="Iluminismo">
+        <label for="q4c">c) Iluminismo</label>
+        <input type="radio" id="q4d" name="q4" value="Revolução Industrial">
+        <label for="q4d">d) Revolução Industrial</label>
+      </div>
+      <div class="botoes-etapa">
+        <button type="button" class="form-btn btn-voltar" onclick="prevStep()">Voltar</button>
+        <button type="button" class="form-btn" onclick="nextStep()">Próxima</button>
+      </div>
+    </div>
+    <div class="step">
+      <div class="form-label">5) Qual conjunto de montanhas forma parte da divisa entre a Europa e a Ásia?</div>
+      <div class="quiz-options">
+        <input type="radio" id="q5a" name="q5" value="Alpes" required>
+        <label for="q5a">a) Alpes</label>
+        <input type="radio" id="q5b" name="q5" value="Pirineus">
+        <label for="q5b">b) Pirineus</label>
+        <input type="radio" id="q5c" name="q5" value="Montes Urais">
+        <label for="q5c">c) Montes Urais</label>
+        <input type="radio" id="q5d" name="q5" value="Cárpatos">
+        <label for="q5d">d) Cárpatos</label>
+      </div>
+      <div class="botoes-etapa">
+        <button type="button" class="form-btn btn-voltar" onclick="prevStep()">Voltar</button>
+        <button type="button" class="form-btn" onclick="nextStep()">Próxima</button>
+      </div>
+    </div>
+    <div class="step">
+      <div class="form-label">6) Durante a Guerra Fria, como a Europa foi dividida?</div>
+      <div class="quiz-options">
+        <input type="radio" id="q6a" name="q6" value="Norte e Sul" required>
+        <label for="q6a">a) Norte e Sul</label>
+        <input type="radio" id="q6b" name="q6" value="Ocidental e Oriental">
+        <label for="q6b">b) Ocidental e Oriental</label>
+        <input type="radio" id="q6c" name="q6" value="Central e Periférica">
+        <label for="q6c">c) Central e Periférica</label>
+        <input type="radio" id="q6d" name="q6" value="Mediterrânea e Continental">
+        <label for="q6d">d) Mediterrânea e Continental</label>
+      </div>
+      <div class="botoes-etapa">
+        <button type="button" class="form-btn btn-voltar" onclick="prevStep()">Voltar</button>
+        <button type="button" class="form-btn" onclick="nextStep()">Próxima</button>
+      </div>
+    </div>
+    <div class="step">
+      <div class="form-label">7) Qual é o clima característico da região do Mediterrâneo na Europa?</div>
+      <div class="quiz-options">
+        <input type="radio" id="q7a" name="q7" value="Clima tropical" required>
+        <label for="q7a">a) Clima tropical</label>
+        <input type="radio" id="q7b" name="q7" value="Clima polar">
+        <label for="q7b">b) Clima polar</label>
+        <input type="radio" id="q7c" name="q7" value="Clima mediterrâneo">
+        <label for="q7c">c) Clima mediterrâneo</label>
+        <input type="radio" id="q7d" name="q7" value="Clima continental">
+        <label for="q7d">d) Clima continental</label>
+      </div>
+      <div class="botoes-etapa">
+        <button type="button" class="form-btn btn-voltar" onclick="prevStep()">Voltar</button>
+        <button type="button" class="form-btn" onclick="nextStep()">Próxima</button>
+      </div>
+    </div>
+    <div class="step">
+      <div class="form-label">8) Qual dos seguintes fatores contribuiu significativamente para o aumento da temperatura na Europa e no planeta?</div>
+      <div class="quiz-options">
+        <input type="radio" id="q8a" name="q8" value="Reflorestamento" required>
+        <label for="q8a">a) Reflorestamento</label>
+        <input type="radio" id="q8b" name="q8" value="Desmatamento">
+        <label for="q8b">b) Desmatamento</label>
+        <input type="radio" id="q8c" name="q8" value="Redução da atividade industrial">
+        <label for="q8c">c) Redução da atividade industrial</label>
+        <input type="radio" id="q8d" name="q8" value="Aumento das áreas de preservação">
+        <label for="q8d">d) Aumento das áreas de preservação</label>
+      </div>
+      <div class="botoes-etapa">
+        <button type="button" class="form-btn btn-voltar" onclick="prevStep()">Voltar</button>
+        <button type="button" class="form-btn" onclick="nextStep()">Próxima</button>
+      </div>
+    </div>
+    <div class="step">
+      <div class="form-label">9) Qual é a principal consequência do desmatamento histórico na Europa?</div>
+      <div class="quiz-options">
+        <input type="radio" id="q9a" name="q9" value="Aumento da biodiversidade" required>
+        <label for="q9a">a) Aumento da biodiversidade</label>
+        <input type="radio" id="q9b" name="q9" value="Redução da temperatura continental">
+        <label for="q9b">b) Redução da temperatura continental</label>
+        <input type="radio" id="q9c" name="q9" value="Extinção de espécies animais e vegetais">
+        <label for="q9c">c) Extinção de espécies animais e vegetais</label>
+        <input type="radio" id="q9d" name="q9" value="Melhoria da qualidade do ar">
+        <label for="q9d">d) Melhoria da qualidade do ar</label>
+      </div>
+      <div class="botoes-etapa">
+        <button type="button" class="form-btn btn-voltar" onclick="prevStep()">Voltar</button>
+        <button type="button" class="form-btn" onclick="nextStep()">Próxima</button>
+      </div>
+    </div>
+    <div class="step">
+      <div class="form-label">10) Qual é o objetivo principal do Pacto Ecológico Europeu em relação às mudanças climáticas?</div>
+      <div class="quiz-options">
+        <input type="radio" id="q10a" name="q10" value="Aumentar a produção agrícola" required>
+        <label for="q10a">a) Aumentar a produção agrícola</label>
+        <input type="radio" id="q10b" name="q10" value="Expandir a indústria petroquímica">
+        <label for="q10b">b) Expandir a indústria petroquímica</label>
+        <input type="radio" id="q10c" name="q10" value="Alcançar a neutralidade climática até 2050">
+        <label for="q10c">c) Alcançar a neutralidade climática até 2050</label>
+        <input type="radio" id="q10d" name="q10" value="Promover o uso de combustíveis fósseis">
+        <label for="q10d">d) Promover o uso de combustíveis fósseis</label>
+      </div>
+      <div class="botoes-etapa">
+        <button type="button" class="form-btn btn-voltar" onclick="prevStep()">Voltar</button>
+        <button type="button" class="form-btn" onclick="nextStep()">Próxima</button>
+      </div>
+    </div>
+    <div class="step">
+      <div class="form-label">11) Qual é a população aproximada da Europa, de acordo com estimativas recentes?</div>
+      <div class="quiz-options">
+        <input type="radio" id="q11a" name="q11" value="500 milhões de habitantes" required>
+        <label for="q11a">a) 500 milhões de habitantes</label>
+        <input type="radio" id="q11b" name="q11" value="600 milhões de habitantes">
+        <label for="q11b">b) 600 milhões de habitantes</label>
+        <input type="radio" id="q11c" name="q11" value="747 milhões de habitantes">
+        <label for="q11c">c) 747 milhões de habitantes</label>
+        <input type="radio" id="q11d" name="q11" value="800 milhões de habitantes">
+        <label for="q11d">d) 800 milhões de habitantes</label>
+      </div>
+      <div class="botoes-etapa">
+        <button type="button" class="form-btn btn-voltar" onclick="prevStep()">Voltar</button>
+        <button type="button" class="form-btn" onclick="nextStep()">Próxima</button>
+      </div>
+    </div>
+    <div class="step">
+      <div class="form-label">12) Qual dos seguintes problemas sociais é frequentemente enfrentado por imigrantes muçulmanos e ciganos na Europa?</div>
+      <div class="quiz-options">
+        <input type="radio" id="q12a" name="q12" value="Desemprego" required>
+        <label for="q12a">a) Desemprego</label>
+        <input type="radio" id="q12b" name="q12" value="Falta de acesso à educação">
+        <label for="q12b">b) Falta de acesso à educação</label>
+        <input type="radio" id="q12c" name="q12" value="Xenofobia e racismo">
+        <label for="q12c">c) Xenofobia e racismo</label>
+        <input type="radio" id="q12d" name="q12" value="Restrições religiosas">
+        <label for="q12d">d) Restrições religiosas</label>
+      </div>
+      <div class="botoes-etapa">
+        <button type="button" class="form-btn btn-voltar" onclick="prevStep()">Voltar</button>
+        <button type="button" class="form-btn" onclick="nextStep()">Próxima</button>
+      </div>
+    </div>
+    <div class="step">
+      <div class="form-label">13) Qual conceito está diretamente ligado ao povo e às suas características culturais, incluindo a relação com um território específico?</div>
+      <div class="quiz-options">
+        <input type="radio" id="q13a" name="q13" value="Estado" required>
+        <label for="q13a">a) Estado</label>
+        <input type="radio" id="q13b" name="q13" value="País">
+        <label for="q13b">b) País</label>
+        <input type="radio" id="q13c" name="q13" value="Nação">
+        <label for="q13c">c) Nação</label>
+        <input type="radio" id="q13d" name="q13" value="Governo">
+        <label for="q13d">d) Governo</label>
+      </div>
+      <div class="botoes-etapa">
+        <button type="button" class="form-btn btn-voltar" onclick="prevStep()">Voltar</button>
+        <button type="button" class="form-btn" onclick="nextStep()">Próxima</button>
+      </div>
+    </div>
+    <div class="step">
+      <div class="form-label">14) Qual evento histórico é comparado à crise de refugiados da Ucrânia em termos de magnitude na Europa?</div>
+      <div class="quiz-options">
+        <input type="radio" id="q14a" name="q14" value="Primeira Guerra Mundial" required>
+        <label for="q14a">a) Primeira Guerra Mundial</label>
+        <input type="radio" id="q14b" name="q14" value="Guerra Fria">
+        <label for="q14b">b) Guerra Fria</label>
+        <input type="radio" id="q14c" name="q14" value="Queda do Muro de Berlim">
+        <label for="q14c">c) Queda do Muro de Berlim</label>
+        <input type="radio" id="q14d" name="q14" value="Segunda Guerra Mundial">
+        <label for="q14d">d) Segunda Guerra Mundial</label>
+      </div>
+      <div class="botoes-etapa">
+        <button type="button" class="form-btn btn-voltar" onclick="prevStep()">Voltar</button>
+        <button type="button" class="form-btn" onclick="nextStep()">Próxima</button>
+      </div>
+    </div>
+    <div class="step">
+      <div class="form-label">15) Aproximadamente quantas pessoas morreram afogadas ao tentar atravessar o Mar Mediterrâneo em 2014?</div>
+      <div class="quiz-options">
+        <input type="radio" id="q15a" name="q15" value="500" required>
+        <label for="q15a">a) 500</label>
+        <input type="radio" id="q15b" name="q15" value="1.000">
+        <label for="q15b">b) 1.000</label>
+        <input type="radio" id="q15c" name="q15" value="1.500">
+        <label for="q15c">c) 1.500</label>
+        <input type="radio" id="q15d" name="q15" value="2.500">
+        <label for="q15d">d) 2.500</label>
+      </div>
+      <div class="botoes-etapa">
+        <button type="button" class="form-btn btn-voltar" onclick="prevStep()">Voltar</button>
+        <button type="button" class="form-btn" onclick="nextStep()">Próxima</button>
+      </div>
+    </div>
+    <!-- HISTÓRIA -->
+    <div class="step">
+      <div class="form-label">16) Qual foi o evento que desencadeou o início da Primeira Guerra Mundial?</div>
+      <div class="quiz-options">
+        <input type="radio" id="q16a" name="q16" value="A invasão da Polônia pela Alemanha" required>
+        <label for="q16a">a) A invasão da Polônia pela Alemanha</label>
+        <input type="radio" id="q16b" name="q16" value="O assassinato do arquiduque Francisco Ferdinando">
+        <label for="q16b">b) O assassinato do arquiduque Francisco Ferdinando</label>
+        <input type="radio" id="q16c" name="q16" value="A Revolução Russa">
+        <label for="q16c">c) A Revolução Russa</label>
+        <input type="radio" id="q16d" name="q16" value="O ataque a Pearl Harbor">
+        <label for="q16d">d) O ataque a Pearl Harbor</label>
+      </div>
+      <div class="botoes-etapa">
+        <button type="button" class="form-btn btn-voltar" onclick="prevStep()">Voltar</button>
+        <button type="button" class="form-btn" onclick="nextStep()">Próxima</button>
+      </div>
+    </div>
+    <div class="step">
+      <div class="form-label">17) Quais eram os dois principais blocos de alianças durante a Primeira Guerra Mundial?</div>
+      <div class="quiz-options">
+        <input type="radio" id="q17a" name="q17" value="Eixo e Aliados" required>
+        <label for="q17a">a) Eixo e Aliados</label>
+        <input type="radio" id="q17b" name="q17" value="Pacto de Varsóvia e OTAN">
+        <label for="q17b">b) Pacto de Varsóvia e OTAN</label>
+        <input type="radio" id="q17c" name="q17" value="Tríplice Aliança e Tríplice Entente">
+        <label for="q17c">c) Tríplice Aliança e Tríplice Entente</label>
+        <input type="radio" id="q17d" name="q17" value="Liga das Nações e Nações Unidas">
+        <label for="q17d">d) Liga das Nações e Nações Unidas</label>
+      </div>
+      <div class="botoes-etapa">
+        <button type="button" class="form-btn btn-voltar" onclick="prevStep()">Voltar</button>
+        <button type="button" class="form-btn" onclick="nextStep()">Próxima</button>
+      </div>
+    </div>
+    <div class="step">
+      <div class="form-label">18) Qual foi uma das principais inovações tecnológicas utilizadas em larga escala durante a Primeira Guerra Mundial?</div>
+      <div class="quiz-options">
+        <input type="radio" id="q18a" name="q18" value="Bombas atômicas" required>
+        <label for="q18a">a) Bombas atômicas</label>
+        <input type="radio" id="q18b" name="q18" value="Mísseis intercontinentais">
+        <label for="q18b">b) Mísseis intercontinentais</label>
+        <input type="radio" id="q18c" name="q18" value="Tanques de guerra">
+        <label for="q18c">c) Tanques de guerra</label>
+        <input type="radio" id="q18d" name="q18" value="Satélites de comunicação">
+        <label for="q18d">d) Satélites de comunicação</label>
+      </div>
+      <div class="botoes-etapa">
+        <button type="button" class="form-btn btn-voltar" onclick="prevStep()">Voltar</button>
+        <button type="button" class="form-btn" onclick="nextStep()">Próxima</button>
+      </div>
+    </div>
+    <div class="step">
+      <div class="form-label">19) Qual tratado marcou oficialmente o fim da Primeira Guerra Mundial?</div>
+      <div class="quiz-options">
+        <input type="radio" id="q19a" name="q19" value="Tratado de Versalhes" required>
+        <label for="q19a">a) Tratado de Versalhes</label>
+        <input type="radio" id="q19b" name="q19" value="Tratado de Brest-Litovsk">
+        <label for="q19b">b) Tratado de Brest-Litovsk</label>
+        <input type="radio" id="q19c" name="q19" value="Tratado de Tordesilhas">
+        <label for="q19c">c) Tratado de Tordesilhas</label>
+        <input type="radio" id="q19d" name="q19" value="Tratado de Westfália">
+        <label for="q19d">d) Tratado de Westfália</label>
+      </div>
+      <div class="botoes-etapa">
+        <button type="button" class="form-btn btn-voltar" onclick="prevStep()">Voltar</button>
+        <button type="button" class="form-btn" onclick="nextStep()">Próxima</button>
+      </div>
+    </div>
+    <div class="step">
+      <div class="form-label">20) Qual foi a principal tática de combate utilizada durante grande parte da Primeira Guerra Mundial na Frente Ocidental?</div>
+      <div class="quiz-options">
+        <input type="radio" id="q20a" name="q20" value="Guerra de movimento" required>
+        <label for="q20a">a) Guerra de movimento</label>
+        <input type="radio" id="q20b" name="q20" value="Guerra de trincheiras">
+        <label for="q20b">b) Guerra de trincheiras</label>
+        <input type="radio" id="q20c" name="q20" value="Blitzkrieg">
+        <label for="q20c">c) Blitzkrieg</label>
+        <input type="radio" id="q20d" name="q20" value="Guerra de guerrilha">
+        <label for="q20d">d) Guerra de guerrilha</label>
+      </div>
+      <div class="botoes-etapa">
+        <button type="button" class="form-btn btn-voltar" onclick="prevStep()">Voltar</button>
+        <button type="button" class="form-btn" onclick="nextStep()">Próxima</button>
+      </div>
+    </div>
+    <div class="step">
+      <div class="form-label">21) Quem liderou o golpe que resultou na Proclamação da República?</div>
+      <div class="quiz-options">
+        <input type="radio" id="q21a" name="q21" value="Dom Pedro II" required>
+        <label for="q21a">a) Dom Pedro II</label>
+        <input type="radio" id="q21b" name="q21" value="Marechal Deodoro da Fonseca">
+        <label for="q21b">b) Marechal Deodoro da Fonseca</label>
+        <input type="radio" id="q21c" name="q21" value="Princesa Isabel">
+        <label for="q21c">c) Princesa Isabel</label>
+        <input type="radio" id="q21d" name="q21" value="Rui Barbosa">
+        <label for="q21d">d) Rui Barbosa</label>
+      </div>
+      <div class="botoes-etapa">
+        <button type="button" class="form-btn btn-voltar" onclick="prevStep()">Voltar</button>
+        <button type="button" class="form-btn" onclick="nextStep()">Próxima</button>
+      </div>
+    </div>
+    <div class="step">
+      <div class="form-label">22) Qual grupo político apoiou a Proclamação da República?</div>
+      <div class="quiz-options">
+        <input type="radio" id="q22a" name="q22" value="Partido Monarquista" required>
+        <label for="q22a">a) Partido Monarquista</label>
+        <input type="radio" id="q22b" name="q22" value="Partido Conservador">
+        <label for="q22b">b) Partido Conservador</label>
+        <input type="radio" id="q22c" name="q22" value="Partido Liberal">
+        <label for="q22c">c) Partido Liberal</label>
+        <input type="radio" id="q22d" name="q22" value="Partido Republicano Paulista">
+        <label for="q22d">d) Partido Republicano Paulista</label>
+      </div>
+      <div class="botoes-etapa">
+        <button type="button" class="form-btn btn-voltar" onclick="prevStep()">Voltar</button>
+        <button type="button" class="form-btn" onclick="nextStep()">Próxima</button>
+      </div>
+    </div>
+    <div class="step">
+      <div class="form-label">23) Qual foi o destino da família real após a Proclamação da República?</div>
+      <div class="quiz-options">
+        <input type="radio" id="q23a" name="q23" value="Permaneceram no Brasil como cidadãos comuns" required>
+        <label for="q23a">a) Permaneceram no Brasil como cidadãos comuns</label>
+        <input type="radio" id="q23b" name="q23" value="Foram presos no Palácio Imperial">
+        <label for="q23b">b) Foram presos no Palácio Imperial</label>
+        <input type="radio" id="q23c" name="q23" value="Exilaram-se na Europa">
+        <label for="q23c">c) Exilaram-se na Europa</label>
+        <input type="radio" id="q23d" name="q23" value="Mudaram-se para Portugal">
+        <label for="q23d">d) Mudaram-se para Portugal</label>
+      </div>
+      <div class="botoes-etapa">
+        <button type="button" class="form-btn btn-voltar" onclick="prevStep()">Voltar</button>
+        <button type="button" class="form-btn" onclick="nextStep()">Próxima</button>
+      </div>
+    </div>
+    <div class="step">
+      <div class="form-label">24) Como é conhecido o período entre 1889 e 1930 na história do Brasil?</div>
+      <div class="quiz-options">
+        <input type="radio" id="q24a" name="q24" value="Império" required>
+        <label for="q24a">a) Império</label>
+        <input type="radio" id="q24b" name="q24" value="Estado Novo">
+        <label for="q24b">b) Estado Novo</label>
+        <input type="radio" id="q24c" name="q24" value="República Velha">
+        <label for="q24c">c) República Velha</label>
+        <input type="radio" id="q24d" name="q24" value="Era Vargas">
+        <label for="q24d">d) Era Vargas</label>
+      </div>
+      <div class="botoes-etapa">
+        <button type="button" class="form-btn btn-voltar" onclick="prevStep()">Voltar</button>
+        <button type="button" class="form-btn" onclick="nextStep()">Próxima</button>
+      </div>
+    </div>
+    <div class="step">
+      <div class="form-label">25) Qual evento histórico marcou o início do período entreguerras?</div>
+      <div class="quiz-options">
+        <input type="radio" id="q25a" name="q25" value="A Revolução Russa" required>
+        <label for="q25a">a) A Revolução Russa</label>
+        <input type="radio" id="q25b" name="q25" value="A crise de 1929">
+        <label for="q25b">b) A crise de 1929</label>
+        <input type="radio" id="q25c" name="q25" value="O fim da Primeira Guerra Mundial">
+        <label for="q25c">c) O fim da Primeira Guerra Mundial</label>
+        <input type="radio" id="q25d" name="q25" value="A ascensão de Hitler ao poder">
+        <label for="q25d">d) A ascensão de Hitler ao poder</label>
+      </div>
+      <div class="botoes-etapa">
+        <button type="button" class="form-btn btn-voltar" onclick="prevStep()">Voltar</button>
+        <button type="button" class="form-btn" onclick="nextStep()">Próxima</button>
+      </div>
+    </div>
+    <div class="step">
+      <div class="form-label">26) Qual crise econômica teve um impacto significativo durante o período entreguerras?</div>
+      <div class="quiz-options">
+        <input type="radio" id="q26a" name="q26" value="A crise do petróleo" required>
+        <label for="q26a">a) A crise do petróleo</label>
+        <input type="radio" id="q26b" name="q26" value="A crise de 1929">
+        <label for="q26b">b) A crise de 1929</label>
+        <input type="radio" id="q26c" name="q26" value="A crise dos mísseis">
+        <label for="q26c">c) A crise dos mísseis</label>
+        <input type="radio" id="q26d" name="q26" value="A crise do Subprime">
+        <label for="q26d">d) A crise do Subprime</label>
+      </div>
+      <div class="botoes-etapa">
+        <button type="button" class="form-btn btn-voltar" onclick="prevStep()">Voltar</button>
+        <button type="button" class="form-btn" onclick="nextStep()">Próxima</button>
+      </div>
+    </div>
+    <div class="step">
+      <div class="form-label">27) Qual política econômica foi adotada nos Estados Unidos para combater os efeitos da Grande Depressão?</div>
+      <div class="quiz-options">
+        <input type="radio" id="q27a" name="q27" value="Plano Marshall" required>
+        <label for="q27a">a) Plano Marshall</label>
+        <input type="radio" id="q27b" name="q27" value="New Deal">
+        <label for="q27b">b) New Deal</label>
+        <input type="radio" id="q27c" name="q27" value="Doutrina Truman">
+        <label for="q27c">c) Doutrina Truman</label>
+        <input type="radio" id="q27d" name="q27" value="Plano Dawes">
+        <label for="q27d">d) Plano Dawes</label>
+      </div>
+      <div class="botoes-etapa">
+        <button type="button" class="form-btn btn-voltar" onclick="prevStep()">Voltar</button>
+        <button type="button" class="form-btn" onclick="nextStep()">Próxima</button>
+      </div>
+    </div>
+    <div class="step">
+      <div class="form-label">28) Qual ideologia política ganhou força na Itália durante o período entreguerras?</div>
+      <div class="quiz-options">
+        <input type="radio" id="q28a" name="q28" value="Comunismo" required>
+        <label for="q28a">a) Comunismo</label>
+        <input type="radio" id="q28b" name="q28" value="Liberalismo">
+        <label for="q28b">b) Liberalismo</label>
+        <input type="radio" id="q28c" name="q28" value="Fascismo">
+        <label for="q28c">c) Fascismo</label>
+        <input type="radio" id="q28d" name="q28" value="Anarquismo">
+        <label for="q28d">d) Anarquismo</label>
+      </div>
+      <div class="botoes-etapa">
+        <button type="button" class="form-btn btn-voltar" onclick="prevStep()">Voltar</button>
+        <button type="button" class="form-btn" onclick="nextStep()">Próxima</button>
+      </div>
+    </div>
+    <div class="step">
+      <div class="form-label">29) Qual regime político se estabeleceu na Alemanha durante o período entreguerras?</div>
+      <div class="quiz-options">
+        <input type="radio" id="q29a" name="q29" value="Nazismo" required>
+        <label for="q29a">a) Nazismo</label>
+        <input type="radio" id="q29b" name="q29" value="Comunismo">
+        <label for="q29b">b) Comunismo</label>
+        <input type="radio" id="q29c" name="q29" value="Monarquia">
+        <label for="q29c">c) Monarquia</label>
+        <input type="radio" id="q29d" name="q29" value="Democracia liberal">
+        <label for="q29d">d) Democracia liberal</label>
+      </div>
+      <div class="botoes-etapa">
+        <button type="button" class="form-btn btn-voltar" onclick="prevStep()">Voltar</button>
+        <button type="button" class="form-btn" onclick="nextStep()">Próxima</button>
+      </div>
+    </div>
+    <div class="step">
+      <div class="form-label">30) Qual dos seguintes fatores contribuiu significativamente para a crise de 1929?</div>
+      <div class="quiz-options">
+        <input type="radio" id="q30a" name="q30" value="Escassez de produção industrial" required>
+        <label for="q30a">a) Escassez de produção industrial</label>
+        <input type="radio" id="q30b" name="q30" value="Aumento da demanda por produtos agrícolas">
+        <label for="q30b">b) Aumento da demanda por produtos agrícolas</label>
+        <input type="radio" id="q30c" name="q30" value="Superprodução industrial e agrícola">
+        <label for="q30c">c) Superprodução industrial e agrícola</label>
+        <input type="radio" id="q30d" name="q30" value="Redução da especulação financeira">
+        <label for="q30d">d) Redução da especulação financeira</label>
+      </div>
+      <div class="botoes-etapa">
+        <button type="button" class="form-btn btn-voltar" onclick="prevStep()">Voltar</button>
+        <button type="submit" class="form-btn" id="enviar-btn">Enviar</button>
+      </div>
+    </div>
+    </div>
+  </form>
+
+  <div id="sending-loader" class="form-card" style="display:none;align-items:center;justify-content:center;min-height:220px;">
+    <div style="display:flex;flex-direction:column;align-items:center;gap:18px;">
+      <div class="loader"></div>
+      <div style="font-size:2rem;color:#1de982;font-weight:bold;text-shadow:0 2px 8px #1de98255;">Enviando respostas...</div>
+      <div style="color:#b2dfdb;font-size:1.1rem;">Por favor, aguarde.</div>
+    </div>
+  </div>
+
+  <div id="resultado" class="form-card" style="display:none; flex-direction:column; align-items:center;">
+    <div class="form-title">Resultado</div>
+    <div id="mensagem-resultado" style="font-size:1.3rem; color:#1de982; margin:18px 0;"></div>
+    <details id="spoiler-correcao" style="width:100%;margin-top:18px;">
+      <summary style="cursor:pointer;font-size:1.1rem;color:#1de982;">Clique para ver a correção das questões</summary>
+      <div style="display:flex;align-items:center;justify-content:center;gap:12px;">
+        <button id="prev-correcao" class="correcao-seta" style="display:none;" aria-label="Anterior">&lt;</button>
+        <div id="correcao" class="correcao"></div>
+        <button id="next-correcao" class="correcao-seta" style="display:none;" aria-label="Próximo">&gt;</button>
+      </div>
+    </details>
+    <div id="pontuacao-geral" style="font-size:1.2rem; color:#1de982; margin:18px 0;"></div>
+  </div>
+
+  <div class="form-card" id="aviso-transicao" style="display:none;align-items:center;justify-content:center;">
+    <div id="texto-transicao" style="font-size:1.25rem;color:#1de982;text-align:center;">
+      <!-- O texto será preenchido via JS -->
+    </div>
+    <button class="form-btn" style="margin-top:18px;" onclick="continuarTransicao()">Continuar</button>
+  </div>
+
+  <script>
+    // Gabarito para correção
+    const gabarito = [
+      // Geografia
+      "Meridiano de Greenwich", // q1
+      "As Grandes Navegações", // q2
+      "Infiéis", // q3
+      "Idade Média", // q4
+      "Montes Urais", // q5
+      "Ocidental e Oriental", // q6
+      "Clima mediterrâneo", // q7
+      "Desmatamento", // q8
+      "Extinção de espécies animais e vegetais", // q9
+      "Alcançar a neutralidade climática até 2050", // q10
+      "747 milhões de habitantes", // q11
+      "Xenofobia e racismo", // q12
+      "Nação", // q13
+      "Segunda Guerra Mundial", // q14
+      "2.500", // q15
+      // História
+      "O assassinato do arquiduque Francisco Ferdinando", // q16
+      "Tríplice Aliança e Tríplice Entente", // q17
+      "Tanques de guerra", // q18
+      "Tratado de Tordesilhas", // q19
+      "Guerra de trincheiras", // q20
+      "Marechal Deodoro da Fonseca", // q21
+      "Partido Republicano Paulista", // q22
+      "Exilaram-se na Europa", // q23
+      "República Velha", // q24
+      "O fim da Primeira Guerra Mundial", // q25
+      "A crise de 1929", // q26
+      "New Deal", // q27
+      "Fascismo", // q28
+      "Nazismo", // q29
+      "Superprodução industrial e agrícola" // q30
+    ];
+
+    const textosQuestoes = [
+      // Geografia
+      "1) Qual linha geográfica divide a Terra em hemisférios Oriental e Ocidental?",
+      "2) Qual evento histórico contribuiu significativamente para a expansão da ideia de Ocidente e Oriente?",
+      "3) Qual termo era usado pela Igreja Católica para se referir aos povos não cristãos durante as Cruzadas?",
+      "4) Qual período histórico é frequentemente associado à intensificação da divisão entre Ocidente e Oriente na Europa?",
+      "5) Qual conjunto de montanhas forma parte da divisa entre a Europa e a Ásia?",
+      "6) Durante a Guerra Fria, como a Europa foi dividida?",
+      "7) Qual é o clima característico da região do Mediterrâneo na Europa?",
+      "8) Qual dos seguintes fatores contribuiu significativamente para o aumento da temperatura na Europa e no planeta?",
+      "9) Qual é a principal consequência do desmatamento histórico na Europa?",
+      "10) Qual é o objetivo principal do Pacto Ecológico Europeu em relação às mudanças climáticas?",
+      "11) Qual é a população aproximada da Europa, de acordo com estimativas recentes?",
+      "12) Qual dos seguintes problemas sociais é frequentemente enfrentado por imigrantes muçulmanos e ciganos na Europa?",
+      "13) Qual conceito está diretamente ligado ao povo e às suas características culturais, incluindo a relação com um território específico?",
+      "14) Qual evento histórico é comparado à crise de refugiados da Ucrânia em termos de magnitude na Europa?",
+      "15) Aproximadamente quantas pessoas morreram afogadas ao tentar atravessar o Mar Mediterrâneo em 2014?",
+      // História
+      "16) Qual foi o evento que desencadeou o início da Primeira Guerra Mundial?",
+      "17) Quais eram os dois principais blocos de alianças durante a Primeira Guerra Mundial?",
+      "18) Qual foi uma das principais inovações tecnológicas utilizadas em larga escala durante a Primeira Guerra Mundial?",
+      "19) Qual tratado marcou oficialmente o fim da Primeira Guerra Mundial?",
+      "20) Qual foi a principal tática de combate utilizada durante grande parte da Primeira Guerra Mundial na Frente Ocidental?",
+      "21) Quem liderou o golpe que resultou na Proclamação da República?",
+      "22) Qual grupo político apoiou a Proclamação da República?",
+      "23) Qual foi o destino da família real após a Proclamação da República?",
+      "24) Como é conhecido o período entre 1889 e 1930 na história do Brasil?",
+      "25) Qual evento histórico marcou o início do período entreguerras?",
+      "26) Qual crise econômica teve um impacto significativo durante o período entreguerras?",
+      "27) Qual política econômica foi adotada nos Estados Unidos para combater os efeitos da Grande Depressão?",
+      "28) Qual ideologia política ganhou força na Itália durante o período entreguerras?",
+      "29) Qual regime político se estabeleceu na Alemanha durante o período entreguerras?",
+      "30) Qual dos seguintes fatores contribuiu significativamente para a crise de 1929?"
+    ];
+
+    let tempo = 7200; // 2 horas
+    let timerInterval;
+    let enviado = false;
+
+    // Variáveis globais para correção/carrossel
+    let correcaoPaginas = [];
+    let paginaAtual = 0;
+
+    // Wizard de etapas
+    let currentStep = 0;
+    const steps = document.querySelectorAll('.step');
+    const progressBar = document.getElementById('progress-bar');
+    function updateProgressBar() {
+      const total = steps.length;
+      const percent = Math.round((currentStep) / (total - 1) * 100);
+      progressBar.style.width = percent + "%";
+    }
+    function nextStep() {
+      // Validação dos campos obrigatórios da etapa atual
+      const inputs = steps[currentStep].querySelectorAll('input, select');
+      for (let input of inputs) {
+        if (input.type === "radio") {
+          const radios = steps[currentStep].querySelectorAll(`input[name="${input.name}"]`);
+          if (![...radios].some(r => r.checked)) {
+            alert('Selecione uma alternativa!');
+            return;
+          }
+        } else if (!input.checkValidity()) {
+          input.reportValidity();
+          return;
+        }
+      }
+      steps[currentStep].classList.remove('active');
+      currentStep++;
+      // Aviso após o nome da equipe (etapa 1, índice 1)
+      if (currentStep === 1) {
+        mostrarTransicao(`
+          <span style="font-size:2.2rem;display:block;margin-bottom:10px;">🌎🧭</span>
+          <b>Agora começam as 15 perguntas de Geografia!</b>
+          <br><br>
+          Responda com atenção.<br>
+          Boa sorte! 🍀
+        `);
+        return;
+      }
+      // Aviso ao chegar na questão 16 (índice 16)
+      if (currentStep === 16) {
+        mostrarTransicao(`
+          <span style="font-size:2.2rem;display:block;margin-bottom:10px;">📜🏛️</span>
+          <b>Agora começam as 15 perguntas de História!</b>
+          <br><br>
+          Continue focado.<br>
+          Você está indo muito bem! 🚀
+        `);
+        return;
+      }
+      if (steps[currentStep]) {
+        steps[currentStep].classList.add('active');
+        updateProgressBar();
+      }
+    }
+    function prevStep() {
+      if (currentStep > 0) {
+        steps[currentStep].classList.remove('active');
+        currentStep--;
+        steps[currentStep].classList.add('active');
+        updateProgressBar();
+      }
+    }
+
+    function comecar() {
+      document.getElementById('inicio').style.display = 'none';
+      document.getElementById('quiz-form').style.display = 'flex';
+      document.getElementById('timer-container').style.display = 'flex';
+      updateProgressBar();
+      iniciarTimer();
+      window.addEventListener('blur', autoEnviar);
+    }
+
+    function iniciarTimer() {
+      const timerCount = document.getElementById('timer-count');
+      timerInterval = setInterval(() => {
+        if (tempo <= 0) {
+          clearInterval(timerInterval);
+          autoEnviar();
+          timerCount.textContent = "Tempo esgotado!";
+          return;
+        }
+        let min = Math.floor(tempo / 60);
+        let seg = tempo % 60;
+        timerCount.textContent = `${min}:${String(seg).padStart(2, '0')}`;
+        tempo--;
+      }, 1000);
+    }
+
+    function autoEnviar() {
+      if (!enviado) {
+        enviado = true;
+        document.getElementById('quiz-form').requestSubmit();
+      }
+    }
+
+    // Envio do formulário
+    const form = document.getElementById('quiz-form');
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      enviado = true;
+      clearInterval(timerInterval);
+      window.removeEventListener('blur', autoEnviar);
+
+      form.style.display = 'none';
+      document.getElementById('timer-container').style.display = 'none';
+      document.getElementById('sending-loader').style.display = 'flex';
+
+      // Corrigir e mostrar resultado
+      let acertos = 0;
+      correcaoPaginas = [];
+      paginaAtual = 0;
+      for (let i = 0; i < gabarito.length; i += 5) {
+        let bloco = '';
+        for (let j = i; j < i + 5 && j < gabarito.length; j++) {
+          const marcada = form.querySelector(`input[name="${nomesQuestoes[j]}"]:checked`);
+          const resposta = marcada ? marcada.value : '';
+          if (resposta === gabarito[j]) {
+            bloco += `<b>${textosQuestoes[j]}</b><br><span style="color:#1de982">✔ Correto!</span><br><br>`;
+            acertos++;
+          } else {
+            bloco += `<b>${textosQuestoes[j]}</b><br>
+              <span style="color:#ff5252">✘ Sua resposta: ${resposta || '<i>Não respondida</i>'}</span><br>
+              <span style="color:#1de982">✔ Correto: ${gabarito[j]}</span><br><br>`;
+          }
+        }
+        correcaoPaginas.push(bloco);
+      }
+
+      // Monta os dados do formulário
+      const formData = new FormData(form);
+
+      // Envia para o Apps Script
+      fetch('https://script.google.com/macros/s/AKfycbw_87V5nGduI_W9UK2g0BTAV0WqYsHRJ6u9ZPmpRQl5rMFc-lOniE_0PJX8_NJiWYGH/exec', {
+        method: "POST",
+        body: formData
+      })
+      .finally(() => {
+        document.getElementById('sending-loader').style.display = 'none';
+        document.getElementById('resultado').style.display = 'flex';
+        document.getElementById('mensagem-resultado').innerHTML =
+          `Você acertou <b>${acertos}</b> de <b>${gabarito.length}</b> perguntas!<br><span style="color:#1de982">Respostas enviadas com sucesso!</span>`;
+        mostrarPaginaCorrecao(0); // Mostra a primeira página da correção
+        document.getElementById('pontuacao-geral').innerHTML =
+          `<b>Respondeu: ${acertos} de ${gabarito.length} perguntas</b>`;
+      });
+    });
+
+    function mostrarPaginaCorrecao(idx) {
+      document.getElementById('correcao').innerHTML = correcaoPaginas[idx];
+      document.getElementById('prev-correcao').style.display = idx > 0 ? '' : 'none';
+      document.getElementById('next-correcao').style.display = idx < correcaoPaginas.length - 1 ? '' : 'none';
+    }
+    document.getElementById('prev-correcao').onclick = () => {
+      if (paginaAtual > 0) {
+        paginaAtual--;
+        mostrarPaginaCorrecao(paginaAtual);
+      }
+    };
+    document.getElementById('next-correcao').onclick = () => {
+      if (paginaAtual < correcaoPaginas.length - 1) {
+        paginaAtual++;
+        mostrarPaginaCorrecao(paginaAtual);
+      }
+    };
+    // Mostrar a primeira página ao abrir o spoiler
+    document.getElementById('spoiler-correcao').addEventListener('toggle', function() {
+      if (this.open) mostrarPaginaCorrecao(0);
+    });
+
+    let aguardandoTransicao = false;
+
+    function mostrarTransicao(texto) {
+      document.getElementById('quiz-form').style.display = 'none';
+      document.getElementById('aviso-transicao').style.display = 'flex';
+      document.getElementById('texto-transicao').innerHTML = texto;
+      aguardandoTransicao = true;
+    }
+
+    function continuarTransicao() {
+      document.getElementById('aviso-transicao').style.display = 'none';
+      document.getElementById('quiz-form').style.display = 'flex';
+      aguardandoTransicao = false;
+      steps[currentStep].classList.add('active');
+      updateProgressBar();
+    }
+
+    // Adicione no início do quiz
+    window.onbeforeunload = function(e) {
+      if (!enviado) {
+        e.preventDefault();
+        e.returnValue = 'Se você sair, suas respostas serão enviadas e não poderá voltar!';
+        return e.returnValue;
+      }
+    };
+
+    // Após o envio do formulário, remova o alerta
+    form.addEventListener('submit', function(e) {
+      enviado = true;
+      window.onbeforeunload = null;
+    });
+
+    // Tenta enviar automaticamente ao sair (não é garantido)
+    window.addEventListener('beforeunload', function (e) {
+      if (!enviado) {
+        document.getElementById('quiz-form').requestSubmit();
+        e.preventDefault();
+        e.returnValue = '';
+      }
+    });
+
+    // Bloqueia botão direito
+    document.addEventListener('contextmenu', function(e) {
+      e.preventDefault();
+    });
+
+    // Bloqueia teclas de atalho comuns
+    document.addEventListener('keydown', function(e) {
+      if (
+        e.key === "F12" ||
+        (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === "i") ||
+        (e.ctrlKey && e.key.toLowerCase() === "u") ||
+        (e.ctrlKey && e.key.toLowerCase() === "c") ||
+        (e.ctrlKey && e.key.toLowerCase() === "v") ||
+        (e.ctrlKey && e.key.toLowerCase() === "s") ||
+        (e.ctrlKey && e.key.toLowerCase() === "p")
+      ) {
+        e.preventDefault();
+      }
+    });
+
+    // Loader de abertura
+    window.addEventListener('load', function() {
+      document.getElementById('page-loader').style.display = 'none';
+    });
+  </script>
+</body>
+</html>
